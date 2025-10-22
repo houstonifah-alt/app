@@ -8,10 +8,10 @@ class User:
         self.email = email
 
 class Transaction:
-    def __init__(self, id, user_id, type, amount, category, date=datetime.datetime.now()):
-        self.id = id
-        self.user_id = user_id
-        self.type = type  # 'income' or 'expense'
+    def __init__(self, amount, category, type):
+        self.id = None
+        self.user_id = None
         self.amount = amount
         self.category = category
-        self.date = date
+        self.type = type
+        self.date = datetime.datetime.now()

@@ -43,11 +43,12 @@ def main():
             user_id = add_user(conn, user)
             print(f"User added with id: {user_id}")
         elif choice == '2':
-            user_id = input("Enter user id: ")
+            user_id = int(input("Enter user id: "))
             type = input("Enter type (income/expense): ")
             amount = float(input("Enter amount: "))
             category = input("Enter category: ")
-            transaction = Transaction(id=None, user_id=user_id, type=type, amount=amount, category=category)
+            transaction = Transaction(amount=amount, category=category, type=type)
+            transaction.user_id = user_id
             transaction_id = add_transaction(conn, transaction)
             print(f"Transaction of {format_currency(transaction.amount)} added with id: {transaction_id}")
         elif choice == '3':
