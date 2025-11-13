@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Budget Tracker</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Custom Tailwind config to support dark mode
+        tailwind.config = {
+            darkMode: 'class',
+        }
+    </script>
+</head>
+<body class="bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100">
+    <div class="container mx-auto p-4 md:p-8 max-w-4xl">
+        <header class="text-center mb-8">
+            <h1 class="text-4xl font-bold">💰 Budget Tracker</h1>
+        </header>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <!-- Left Column: Form and Totals -->
+            <div>
+                <!-- Add Transaction Form -->
+                <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg mb-8">
+                    <h2 class="text-2xl font-bold mb-4">Add a New Transaction</h2>
+                    <form id="transaction-form">
+                        <div class="mb-4">
+                            <label for="description" class="block text-sm font-medium">Description</label>
+                            <input type="text" id="description" class="mt-1 block w-full bg-gray-100 dark:bg-gray-700 border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500" required>
+                        </div>
+                        <div class="mb-4">
+                            <label for="amount" class="block text-sm font-medium">Amount</label>
+                            <input type="number" id="amount" step="0.01" class="mt-1 block w-full bg-gray-100 dark:bg-gray-700 border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500" required>
+                        </div>
+                        <div class="mb-4">
+                            <label for="category" class="block text-sm font-medium">Category</label>
+                            <select id="category" class="mt-1 block w-full bg-gray-100 dark:bg-gray-700 border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
+                                <option>Food</option>
+                                <option>Bills</option>
+                                <option>Entertainment</option>
+                                <option>Other</option>
+                            </select>
+                        </div>
+                        <div class="mb-4">
+                            <span class="block text-sm font-medium">Type</span>
+                            <div class="mt-2 flex items-center">
+                                <input type="radio" name="type" id="income" value="income" class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300" checked>
+                                <label for="income" class="ml-3 block text-sm font-medium">Income</label>
+                                <input type="radio" name="type" id="expense" value="expense" class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 ml-6">
+                                <label for="expense" class="ml-3 block text-sm font-medium">Expense</label>
+                            </div>
+                        </div>
+                        <button type="submit" class="w-full bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Add Transaction</button>
+                    </form>
+                </div>
+
+                <!-- Totals Display -->
+                <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg">
+                    <h2 class="text-2xl font-bold mb-4">Summary</h2>
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="text-lg">Total Income:</span>
+                        <span id="total-income" class="text-lg font-semibold text-green-500">$0.00</span>
+                    </div>
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="text-lg">Total Expenses:</span>
+                        <span id="total-expenses" class="text-lg font-semibold text-red-500">$0.00</span>
+                    </div>
+                    <hr class="my-2 border-gray-300 dark:border-gray-600">
+                    <div class="flex justify-between items-center mt-2">
+                        <span class="text-lg font-bold">Balance:</span>
+                        <span id="balance" class="text-lg font-bold">$0.00</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column: Chart and Transactions List -->
+            <div>
+                <!-- Pie Chart -->
+                <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg mb-8">
+                    <h2 class="text-2xl font-bold mb-4">Expense Breakdown</h2>
+                    <canvas id="expense-chart"></canvas>
+                </div>
+
+                <!-- Transactions List -->
+                <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg">
+                    <h2 class="text-2xl font-bold mb-4">Transaction History</h2>
+                    <ul id="transaction-list" class="space-y-3">
+                        <!-- Transactions will be dynamically inserted here -->
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Controls -->
+        <div class="mt-8 flex justify-center items-center space-x-4">
+            <!-- Dark Mode Toggle -->
+            <label for="dark-mode-toggle" class="flex items-center cursor-pointer">
+                <div class="relative">
+                    <input type="checkbox" id="dark-mode-toggle" class="sr-only">
+                    <div class="block bg-gray-600 w-14 h-8 rounded-full"></div>
+                    <div class="dot absolute left-1 top-1 bg-white w-6 h-6 rounded-full transition"></div>
+                </div>
+                <div class="ml-3 text-gray-700 dark:text-gray-300 font-medium">
+                    Dark Mode
+                </div>
+            </label>
+            <!-- Clear All Button -->
+            <button id="clear-all" class="bg-red-600 text-white py-2 px-4 rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">Clear All Data</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
