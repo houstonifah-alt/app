@@ -5,25 +5,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Budget Tracker</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: 'class'
+      }
+    </script>
 </head>
-<body class="bg-gray-100">
+<body class="bg-gray-100 dark:bg-gray-900 dark:text-white">
     <div class="container mx-auto p-4">
-        <h1 class="text-3xl font-bold text-center mb-4">Budget Tracker</h1>
+        <div class="flex justify-between items-center mb-4">
+            <h1 class="text-3xl font-bold text-center">Budget Tracker</h1>
+            <button id="dark-mode-toggle" onclick="toggleDarkMode()" class="bg-gray-800 text-white px-4 py-2 rounded-lg">🌙 Dark Mode</button>
+        </div>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
                 <h2 class="text-2xl font-bold mb-2">Add Transaction</h2>
-                <form id="transaction-form" class="bg-white p-4 rounded-lg shadow-md">
+                <form id="transaction-form" class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-md">
                     <div class="mb-4">
-                        <label for="description" class="block text-gray-700 font-bold mb-2">Description</label>
-                        <input type="text" id="description" class="w-full px-3 py-2 border rounded-lg" placeholder="Enter description" required>
+                        <label for="description" class="block text-gray-700 dark:text-gray-300 font-bold mb-2">Description</label>
+                        <input type="text" id="description" class="w-full px-3 py-2 border rounded-lg dark:bg-gray-700 dark:border-gray-600" placeholder="Enter description" required>
                     </div>
                     <div class="mb-4">
-                        <label for="amount" class="block text-gray-700 font-bold mb-2">Amount</label>
-                        <input type="number" id="amount" class="w-full px-3 py-2 border rounded-lg" placeholder="Enter amount" required>
+                        <label for="amount" class="block text-gray-700 dark:text-gray-300 font-bold mb-2">Amount</label>
+                        <input type="number" id="amount" class="w-full px-3 py-2 border rounded-lg dark:bg-gray-700 dark:border-gray-600" placeholder="Enter amount" required>
                     </div>
                     <div class="mb-4">
-                        <label for="type" class="block text-gray-700 font-bold mb-2">Type</label>
-                        <select id="type" class="w-full px-3 py-2 border rounded-lg">
+                        <label for="type" class="block text-gray-700 dark:text-gray-300 font-bold mb-2">Type</label>
+                        <select id="type" class="w-full px-3 py-2 border rounded-lg dark:bg-gray-700 dark:border-gray-600">
                             <option value="income">Income</option>
                             <option value="expense">Expense</option>
                         </select>
@@ -33,10 +41,10 @@
             </div>
             <div>
                 <h2 class="text-2xl font-bold mb-2">Transactions</h2>
-                <ul id="transaction-list" class="bg-white p-4 rounded-lg shadow-md">
+                <ul id="transaction-list" class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-md">
                     <!-- Transactions will be added here -->
                 </ul>
-                <div class="mt-4 bg-white p-4 rounded-lg shadow-md">
+                <div class="mt-4 bg-white dark:bg-gray-800 p-4 rounded-lg shadow-md">
                     <h2 class="text-2xl font-bold mb-2">Budget Overview</h2>
                     <canvas id="budget-chart"></canvas>
                 </div>
